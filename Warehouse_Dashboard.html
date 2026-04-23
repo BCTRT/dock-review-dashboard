@@ -79,3 +79,738 @@
   .kpi .value { font-size: 22px; font-weight: 700; color: #1a2238; display: flex; align-items: center; gap: 6px; }
   .kpi .label { font-size: 12px; color: #5a6784; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
   .kpi .trend { font-size: 11px; margin-top: 4px; font-weight: 600; }
+  .trend.up-good, .trend.down-good { color: #2e8b57; }
+  .trend.up-bad, .trend.down-bad { color: #c0392b; }
+  .trend.flat { color: #5a6784; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 4px; }
+  .dot.g { background: #2e8b57; }
+  .dot.a { background: #f0a202; }
+  .dot.r { background: #c0392b; }
+  .kpi .io-split { font-size: 11px; margin-top: 4px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .io-split .in  { color: #0D6E8A; font-weight: 600; }
+  .io-split .out { color: #E8892B; font-weight: 600; }
+  .io-glance { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; margin-bottom: 14px; }
+  .io-panel { border-radius: 8px; padding: 12px; border-left: 4px solid; }
+  .io-panel.in  { background: #e8f2f5; border-left-color: #0D6E8A; }
+  .io-panel.out { background: #fdf2e5; border-left-color: #E8892B; }
+  .io-panel-title { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .io-panel.in  .io-panel-title { color: #0D6E8A; }
+  .io-panel.out .io-panel-title { color: #E8892B; }
+  .io-panel-volume { font-size: 20px; font-weight: 700; color: #1a2238; }
+  .io-panel-metrics { font-size: 12px; color: #3a4560; margin-top: 4px; line-height: 1.5; }
+  .io-panel-metrics strong { color: #1a2238; }
+  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0 12px; }
+  .filter-btn {
+    background: #f4f6fa; border: 1px solid #cfd6e4; color: #2b3a67;
+    padding: 6px 12px; border-radius: 16px; font-size: 12px;
+    font-weight: 600; cursor: pointer; transition: all 0.15s;
+  }
+  .filter-btn:hover { background: #e8ecf5; }
+  .filter-btn.active { background: #2b3a67; color: #fff; border-color: #2b3a67; }
+  .filter-btn.active.in  { background: #0D6E8A; border-color: #0D6E8A; }
+  .filter-btn.active.out { background: #E8892B; border-color: #E8892B; }
+  .dir-indicator { display: inline-block; font-size: 11px; font-weight: 700; margin-left: 6px; padding: 1px 6px; border-radius: 8px; }
+  .dir-indicator.in  { background: #e8f2f5; color: #0D6E8A; }
+  .dir-indicator.out { background: #fdf2e5; color: #E8892B; }
+  .dir-indicator.mix { background: #e8ecf5; color: #2b3a67; }
+  .callouts { list-style: none; }
+  .callout {
+    padding: 10px 12px; border-left: 4px solid #2b3a67;
+    background: #f9fafc; border-radius: 6px; margin-bottom: 8px; font-size: 13px;
+  }
+  .callout.alert    { border-left-color: #c0392b; background: #fdf3f1; }
+  .callout.warn     { border-left-color: #f0a202; background: #fef8ea; }
+  .callout.good     { border-left-color: #2e8b57; background: #f0f8f3; }
+  .callout-title { font-weight: 700; margin-bottom: 2px; color: #1a2238; }
+  .callout-body { color: #3a4560; }
+  .callout-action { font-size: 12px; color: #2b3a67; font-style: italic; margin-top: 4px; }
+  .carrier-list { display: flex; flex-direction: column; gap: 8px; }
+  .carrier-row {
+    display: grid; grid-template-columns: 30px 1fr auto;
+    align-items: center; gap: 10px;
+    padding: 10px 12px; background: #f9fafc;
+    border: 1px solid #e8ecf5; border-radius: 8px; font-size: 13px;
+  }
+  .rank {
+    background: #2b3a67; color: #fff;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+  }
+  .rank.bad { background: #c0392b; }
+  .carrier-name { font-weight: 600; color: #1a2238; }
+  .carrier-meta { font-size: 11px; color: #5a6784; }
+  .pill { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 10px; white-space: nowrap; }
+  .pill.g { background: #e1f2e8; color: #1d6b3f; }
+  .pill.a { background: #fdf0d1; color: #8a5e00; }
+  .pill.r { background: #fadbd8; color: #922b21; }
+  .subhead { font-size: 13px; font-weight: 700; color: #2b3a67; margin: 14px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .toggle-link { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: #2b3a67; font-weight: 600; cursor: pointer; padding: 8px; border-top: 1px dashed #cfd6e4; }
+  .hidden { display: none; }
+  table.carrier-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+  .carrier-table th, .carrier-table td { text-align: left; padding: 8px 6px; border-bottom: 1px solid #e8ecf5; }
+  .carrier-table th { background: #f4f6fa; color: #2b3a67; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .carrier-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .heatmap-wrap { overflow-x: auto; margin-top: 6px; }
+  table.heatmap { border-collapse: collapse; font-size: 11px; width: 100%; min-width: 480px; }
+  .heatmap th, .heatmap td { padding: 6px 4px; text-align: center; border: 1px solid #fff; }
+  .heatmap th { background: #2b3a67; color: #fff; font-weight: 600; }
+  .heatmap td.day { background: #e8ecf5; font-weight: 700; color: #1a2238; }
+  .hm-0 { background: #f4f6fa; color: #5a6784; }
+  .hm-1 { background: #dfe6f1; }
+  .hm-2 { background: #b8c8e0; }
+  .hm-3 { background: #7f9bc6; color: #fff; }
+  .hm-4 { background: #4a6fa5; color: #fff; }
+  .hm-5 { background: #2b3a67; color: #fff; font-weight: 700; }
+  .legend { display: flex; justify-content: center; align-items: center; gap: 4px; font-size: 11px; color: #5a6784; margin-top: 8px; }
+  .legend .sw { width: 18px; height: 12px; display: inline-block; border: 1px solid #fff; }
+  .trend-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .trend-card { background: #f9fafc; border: 1px solid #e8ecf5; border-radius: 8px; padding: 12px; }
+  .trend-card h3 { font-size: 13px; color: #2b3a67; margin-bottom: 8px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  .trend-card .mini-legend { font-size: 10px; font-weight: 600; display: flex; gap: 8px; }
+  .mini-legend .in  { color: #0D6E8A; }
+  .mini-legend .out { color: #E8892B; }
+  .mini-legend .sq { display: inline-block; width: 8px; height: 8px; vertical-align: middle; margin-right: 2px; border-radius: 2px; }
+  .mini-legend .sq.in  { background: #0D6E8A; }
+  .mini-legend .sq.out { background: #E8892B; }
+  .bar-chart { display: flex; align-items: flex-end; height: 90px; gap: 4px; border-bottom: 1px solid #cfd6e4; padding-bottom: 2px; padding-top: 16px; }
+  .bar-chart.split { gap: 10px; }
+  .bar-group { display: flex; flex: 1; gap: 2px; align-items: flex-end; height: 100%; }
+  .bar { flex: 1; background: #2b3a67; border-radius: 3px 3px 0 0; position: relative; min-height: 3px; }
+  .bar.in  { background: #0D6E8A; }
+  .bar.out { background: #E8892B; }
+  .bar.current { background: #2e8b57; }
+  .bar .bar-value { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); font-size: 10px; font-weight: 700; white-space: nowrap; line-height: 1; }
+  .bar.in  .bar-value { color: #0D6E8A; }
+  .bar.out .bar-value { color: #E8892B; }
+  .trend-hero .bar .bar-value { font-size: 11px; top: -16px; }
+  .bar-labels { display: flex; gap: 10px; margin-top: 4px; font-size: 10px; color: #5a6784; }
+  .bar-labels span { flex: 1; text-align: center; }
+  .trend-hero { background: #fff; border: 2px solid #f0a202; border-radius: 10px; padding: 14px; margin-bottom: 14px; position: relative; }
+  .trend-hero .hero-badge { position: absolute; top: -10px; left: 14px; background: #f0a202; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .trend-hero h3 { font-size: 14px; color: #1a2238; margin: 4px 0 10px; display: flex; justify-content: space-between; align-items: center; }
+  .trend-hero .bar-chart { height: 110px; }
+  .trend-hero .hero-note { font-size: 12px; color: #3a4560; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e8ecf5; line-height: 1.55; }
+  .trend-hero .hero-note strong { color: #1a2238; }
+  .mars-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 12px; }
+  .mars-note { background: #fef8ea; border-left: 4px solid #f0a202; padding: 10px 12px; border-radius: 6px; font-size: 12px; color: #3a4560; }
+  footer { text-align: center; font-size: 11px; color: #5a6784; padding: 20px 14px 10px; border-top: 1px solid #e8ecf5; background: #fff; }
+  footer strong { color: #2b3a67; }
+  #back-to-top {
+    position: fixed; bottom: 18px; right: 18px;
+    background: #2b3a67; color: #fff; width: 44px; height: 44px;
+    border-radius: 50%; text-align: center; line-height: 44px;
+    font-size: 18px; text-decoration: none;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+    opacity: 0; transition: opacity 0.2s; z-index: 50;
+  }
+  #back-to-top.visible { opacity: 1; }
+  @media (min-width: 720px) {
+    .page-header h1 { font-size: 26px; }
+    .page-header .subtitle { font-size: 14px; }
+    .sticky-nav a { font-size: 14px; padding: 12px 18px; }
+    .kpi-grid { grid-template-columns: repeat(5, 1fr); }
+    .kpi .value { font-size: 24px; }
+    .mars-stats { grid-template-columns: repeat(4, 1fr); }
+    .trend-grid { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 22px 24px; }
+    .section-header h2 { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header" id="top">
+  <div class="header-logo"><img src="data:image/png;base64,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" alt="TR Toppers"></div>
+  <h1>TR Toppers — Dock Operations Dashboard</h1>
+  <div class="subtitle">YTD Jan 02 – Apr 24, 2026 &nbsp;|&nbsp; Warehouse Operations, Pueblo CO</div>
+</header>
+
+<nav class="sticky-nav" aria-label="Section navigation">
+  <a href="#summary">Summary</a>
+  <a href="#carriers">Carriers</a>
+  <a href="#utilization">Utilization</a>
+  <a href="#trends">Trends</a>
+  <a href="#mars">MARS</a>
+</nav>
+
+<main>
+
+  <!-- ========== SUMMARY ========== -->
+  <section id="summary">
+    <div class="section-header">
+      <h2>Summary</h2>
+      <span class="badge">YTD</span>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="value">1,175</div>
+        <div class="label">Total Appointments</div>
+        <div class="trend flat">Completed + In-Progress</div>
+      </div>
+      <div class="kpi green">
+        <div class="value"><span class="dot g"></span>90%</div>
+        <div class="label">On-Time (YTD)</div>
+        <div class="trend flat">Finalized only</div>
+        <div class="io-split"><span class="in">IN 94%</span><span class="out">OUT 86%</span></div>
+      </div>
+      <div class="kpi red">
+        <div class="value"><span class="dot r"></span>60%</div>
+        <div class="label">Disruption Rate</div>
+        <div class="trend flat">Late + Cancelled + Resched</div>
+        <div class="io-split"><span class="in">IN 55%</span><span class="out">OUT 65%</span></div>
+      </div>
+      <div class="kpi">
+        <div class="value">114 min</div>
+        <div class="label">Avg Dwell Time</div>
+        <div class="trend flat">Finalized only</div>
+        <div class="io-split"><span class="in">IN 112m</span><span class="out">OUT 116m</span></div>
+      </div>
+      <div class="kpi green">
+        <div class="value"><span class="dot g"></span>0</div>
+        <div class="label">Carriers At Risk</div>
+        <div class="trend flat">OT% below 61%</div>
+      </div>
+    </div>
+
+    <div class="io-glance">
+      <div class="io-panel in">
+        <div class="io-panel-title">▼ Inbound</div>
+        <div class="io-panel-volume">602 appts</div>
+        <div class="io-panel-metrics">
+          <strong>94%</strong> on-time &middot; <strong>55%</strong> disruption<br>
+          <strong>112 min</strong> avg dwell &middot; <strong>50%</strong> reschedule
+        </div>
+      </div>
+      <div class="io-panel out">
+        <div class="io-panel-title">▲ Outbound</div>
+        <div class="io-panel-volume">573 appts</div>
+        <div class="io-panel-metrics">
+          <strong>86%</strong> on-time &middot; <strong>65%</strong> disruption<br>
+          <strong>116 min</strong> avg dwell &middot; <strong>59%</strong> reschedule
+        </div>
+      </div>
+    </div>
+
+    <div class="subhead">Headline Callouts</div>
+    <ul class="callouts">
+      <li class="callout warn">
+        <div class="callout-title">Inbound is outperforming Outbound by 8 points on OT%</div>
+        <div class="callout-body">Inbound OT: 94% vs Outbound OT: 86%.</div>
+        <div class="callout-action">→ Review outbound flow: pick/stage/load sequence, dock assignment, or shift boundaries.</div>
+      </li><li class="callout warn">
+        <div class="callout-title">Outbound dwell running 5 min longer than the other direction</div>
+        <div class="callout-body">Inbound avg: 112 min vs Outbound avg: 116 min.</div>
+        <div class="callout-action">→ Points to loading/staging as the bottleneck.</div>
+      </li><li class="callout alert">
+        <div class="callout-title">Reschedule rate trending up</div>
+        <div class="callout-body">Combined reschedule % rose from 53% in Jan to 62% in Apr.</div>
+        <div class="callout-action">→ Pull top reschedule offenders for a dispatch call; see Trends section for the curve.</div>
+      </li><li class="callout good">
+        <div class="callout-title">International Paper leading on OT performance</div>
+        <div class="callout-body">100% OT Score across 18 finalized appointments YTD.</div>
+        <div class="callout-action">→ Acknowledge on next scorecard send.</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ========== CARRIERS ========== -->
+  <section id="carriers">
+    <div class="section-header">
+      <h2>Carriers</h2>
+      <span class="badge">YTD — 15+ appts</span>
+    </div>
+
+    <div class="filter-row">
+      <button class="filter-btn active" data-filter="all" onclick="setCarrierFilter('all', this)">All carriers</button>
+      <button class="filter-btn" data-filter="in" onclick="setCarrierFilter('in', this)">▼ Inbound only</button>
+      <button class="filter-btn" data-filter="out" onclick="setCarrierFilter('out', this)">▲ Outbound only</button>
+      <button class="filter-btn" data-filter="mix" onclick="setCarrierFilter('mix', this)">⇅ Mixed</button>
+    </div>
+
+    <div class="subhead" id="top5-head">Top 5 — Best On-Time</div>
+    <div class="carrier-list" id="top5-list">
+      <div class="carrier-row" data-dir="in">
+        <div class="rank">1</div>
+        <div>
+          <div class="carrier-name">International Paper <span class="dir-indicator in">▼ IN</span></div>
+          <div class="carrier-meta">18 appts · 53% disruption</div>
+        </div>
+        <span class="pill g">100% OT Score</span>
+      </div><div class="carrier-row" data-dir="in">
+        <div class="rank">2</div>
+        <div>
+          <div class="carrier-name">Prime Inc <span class="dir-indicator in">▼ IN</span></div>
+          <div class="carrier-meta">48 appts · 52% disruption</div>
+        </div>
+        <span class="pill g">98% OT Score</span>
+      </div><div class="carrier-row" data-dir="in">
+        <div class="rank">3</div>
+        <div>
+          <div class="carrier-name">The Hershey Company <span class="dir-indicator in">▼ IN</span></div>
+          <div class="carrier-meta">149 appts · 75% disruption</div>
+        </div>
+        <span class="pill g">96% OT Score</span>
+      </div><div class="carrier-row" data-dir="in">
+        <div class="rank">4</div>
+        <div>
+          <div class="carrier-name">Spot Freight Inc <span class="dir-indicator in">▼ IN</span></div>
+          <div class="carrier-meta">17 appts · 44% disruption</div>
+        </div>
+        <span class="pill g">94% OT Score</span>
+      </div><div class="carrier-row" data-dir="mix">
+        <div class="rank">5</div>
+        <div>
+          <div class="carrier-name">KLLM <span class="dir-indicator mix">⇅ MIX</span></div>
+          <div class="carrier-meta">41 appts (88% in / 12% out) · 43% disruption</div>
+        </div>
+        <span class="pill g">93% OT Score</span>
+      </div>
+    </div>
+
+    <div class="subhead" id="bot5-head">Bottom 5 — Needs Attention</div>
+    <div class="carrier-list" id="bot5-list">
+      <div class="carrier-row" data-dir="mix">
+        <div class="rank bad">1</div>
+        <div>
+          <div class="carrier-name">Total Quality Logistics <span class="dir-indicator mix">⇅ MIX</span></div>
+          <div class="carrier-meta">55 appts (16% in / 84% out) · 89% disruption</div>
+        </div>
+        <span class="pill a">73% OT Score</span>
+      </div><div class="carrier-row" data-dir="out">
+        <div class="rank bad">2</div>
+        <div>
+          <div class="carrier-name">American Freightways <span class="dir-indicator out">▲ OUT</span></div>
+          <div class="carrier-meta">17 appts · 94% disruption</div>
+        </div>
+        <span class="pill a">76% OT Score</span>
+      </div><div class="carrier-row" data-dir="mix">
+        <div class="rank bad">3</div>
+        <div>
+          <div class="carrier-name">Scotlynn USA Division <span class="dir-indicator mix">⇅ MIX</span></div>
+          <div class="carrier-meta">35 appts (3% in / 97% out) · 95% disruption</div>
+        </div>
+        <span class="pill a">83% OT Score</span>
+      </div><div class="carrier-row" data-dir="out">
+        <div class="rank bad">4</div>
+        <div>
+          <div class="carrier-name">Shamrock Foods Company <span class="dir-indicator out">▲ OUT</span></div>
+          <div class="carrier-meta">15 appts · 82% disruption</div>
+        </div>
+        <span class="pill g">87% OT Score</span>
+      </div><div class="carrier-row" data-dir="mix">
+        <div class="rank bad">5</div>
+        <div>
+          <div class="carrier-name">Gateway Logistics, Inc. <span class="dir-indicator mix">⇅ MIX</span></div>
+          <div class="carrier-meta">17 appts (6% in / 94% out) · 94% disruption</div>
+        </div>
+        <span class="pill g">88% OT Score</span>
+      </div>
+    </div>
+
+    <div class="toggle-link" onclick="toggleTable()" id="toggle-all">Show all qualifying carriers ▼</div>
+    <div id="all-carriers" class="hidden">
+      <table class="carrier-table">
+        <thead>
+          <tr>
+            <th>Carrier</th>
+            <th>Dir</th>
+            <th class="num">Appts</th>
+            <th class="num" title="On-Time + Early - carrier-friendly headline (matches scorecard)">OT Score</th>
+            <th class="num" title="Strict on-time only (within +/-15 min of appt)">OT %</th>
+            <th class="num" title="Arrived more than 15 min early">Early %</th>
+            <th class="num" title="Arrived more than 15 min late">Late %</th>
+            <th class="num">Cancel %</th>
+            <th class="num">No Show %</th>
+            <th class="num">Disrupt %</th>
+            <th class="num">Resch %</th>
+            <th class="num">Dwell</th>
+          </tr>
+        </thead>
+        <tbody id="all-carriers-body">
+          <tr data-dir="in"><td>International Paper</td><td><span class="dir-indicator in">IN</span></td><td class="num">18</td><td class="num">100%</td><td class="num">72%</td><td class="num">28%</td><td class="num">0%</td><td class="num">5%</td><td class="num">0%</td><td class="num">53%</td><td class="num">53%</td><td class="num">49</td></tr><tr data-dir="in"><td>Prime Inc</td><td><span class="dir-indicator in">IN</span></td><td class="num">48</td><td class="num">98%</td><td class="num">21%</td><td class="num">77%</td><td class="num">2%</td><td class="num">2%</td><td class="num">2%</td><td class="num">52%</td><td class="num">48%</td><td class="num">129</td></tr><tr data-dir="in"><td>The Hershey Company</td><td><span class="dir-indicator in">IN</span></td><td class="num">149</td><td class="num">96%</td><td class="num">23%</td><td class="num">72%</td><td class="num">4%</td><td class="num">0%</td><td class="num">1%</td><td class="num">75%</td><td class="num">73%</td><td class="num">126</td></tr><tr data-dir="in"><td>Spot Freight Inc</td><td><span class="dir-indicator in">IN</span></td><td class="num">17</td><td class="num">94%</td><td class="num">12%</td><td class="num">82%</td><td class="num">6%</td><td class="num">6%</td><td class="num">0%</td><td class="num">44%</td><td class="num">33%</td><td class="num">154</td></tr><tr data-dir="mix"><td>KLLM</td><td><span class="dir-indicator mix">MIX</span></td><td class="num">41</td><td class="num">93%</td><td class="num">10%</td><td class="num">83%</td><td class="num">7%</td><td class="num">0%</td><td class="num">2%</td><td class="num">43%</td><td class="num">43%</td><td class="num">100</td></tr><tr data-dir="mix"><td>MegaCorp Logistics</td><td><span class="dir-indicator mix">MIX</span></td><td class="num">35</td><td class="num">91%</td><td class="num">14%</td><td class="num">77%</td><td class="num">9%</td><td class="num">8%</td><td class="num">0%</td><td class="num">76%</td><td class="num">66%</td><td class="num">73</td></tr><tr data-dir="out"><td>Dot Foods</td><td><span class="dir-indicator out">OUT</span></td><td class="num">55</td><td class="num">91%</td><td class="num">24%</td><td class="num">67%</td><td class="num">9%</td><td class="num">7%</td><td class="num">2%</td><td class="num">92%</td><td class="num">87%</td><td class="num">101</td></tr><tr data-dir="in"><td>Rathour Logistics Inc</td><td><span class="dir-indicator in">IN</span></td><td class="num">38</td><td class="num">89%</td><td class="num">13%</td><td class="num">76%</td><td class="num">11%</td><td class="num">0%</td><td class="num">3%</td><td class="num">56%</td><td class="num">51%</td><td class="num">98</td></tr><tr data-dir="mix"><td>Gateway Logistics, Inc.</td><td><span class="dir-indicator mix">MIX</span></td><td class="num">17</td><td class="num">88%</td><td class="num">6%</td><td class="num">82%</td><td class="num">12%</td><td class="num">0%</td><td class="num">0%</td><td class="num">94%</td><td class="num">94%</td><td class="num">83</td></tr><tr data-dir="out"><td>Shamrock Foods Company</td><td><span class="dir-indicator out">OUT</span></td><td class="num">15</td><td class="num">87%</td><td class="num">0%</td><td class="num">87%</td><td class="num">13%</td><td class="num">12%</td><td class="num">0%</td><td class="num">82%</td><td class="num">65%</td><td class="num">35</td></tr><tr data-dir="mix"><td>Scotlynn USA Division</td><td><span class="dir-indicator mix">MIX</span></td><td class="num">35</td><td class="num">83%</td><td class="num">20%</td><td class="num">63%</td><td class="num">17%</td><td class="num">5%</td><td class="num">0%</td><td class="num">95%</td><td class="num">92%</td><td class="num">75</td></tr><tr data-dir="out"><td>American Freightways</td><td><span class="dir-indicator out">OUT</span></td><td class="num">17</td><td class="num">76%</td><td class="num">12%</td><td class="num">65%</td><td class="num">24%</td><td class="num">0%</td><td class="num">6%</td><td class="num">94%</td><td class="num">94%</td><td class="num">70</td></tr><tr data-dir="mix"><td>Total Quality Logistics</td><td><span class="dir-indicator mix">MIX</span></td><td class="num">55</td><td class="num">73%</td><td class="num">22%</td><td class="num">51%</td><td class="num">27%</td><td class="num">0%</td><td class="num">0%</td><td class="num">89%</td><td class="num">87%</td><td class="num">59</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ========== UTILIZATION ========== -->
+  <section id="utilization">
+    <div class="section-header">
+      <h2>Utilization</h2>
+      <span class="badge" id="util-badge">Last 3 Months — Jan – Mar 2026</span>
+    </div>
+
+    <div class="filter-row">
+      <button class="filter-btn active" id="util-btn-3mo" onclick="setUtilWindow('3mo', this)">Last 3 Months</button>
+      <button class="filter-btn" id="util-btn-1mo" onclick="setUtilWindow('1mo', this)">Last Month (Mar)</button>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="value">Mon</div>
+        <div class="label">Peak Day</div>
+        <div class="trend flat">360 appts in that window</div>
+      </div>
+      <div class="kpi">
+        <div class="value">6 AM</div>
+        <div class="label">Peak Hour</div>
+        <div class="trend flat">212 appts total</div>
+      </div>
+      <div class="kpi">
+        <div class="value">51%</div>
+        <div class="label">Inbound</div>
+        <div class="trend flat">602 appts</div>
+      </div>
+      <div class="kpi">
+        <div class="value">49%</div>
+        <div class="label">Outbound</div>
+        <div class="trend flat">573 appts</div>
+      </div>
+    </div>
+
+    <div class="subhead">Appointments by Day &amp; Hour</div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="setHeatmap('all', this)">Combined</button>
+      <button class="filter-btn" onclick="setHeatmap('in', this)">▼ Inbound</button>
+      <button class="filter-btn" onclick="setHeatmap('out', this)">▲ Outbound</button>
+    </div>
+    <div class="heatmap-wrap util-3mo">
+      <table class="heatmap" id="heatmap-3mo-all">
+<thead><tr><th></th><th>6a</th><th>7a</th><th>8a</th><th>9a</th><th>10a</th><th>11a</th><th>12p</th><th>1p</th><th>2p</th><th>3p</th><th>4p</th></tr></thead>
+<tbody><tr><td class="day">Mon</td><td class="hm-5">56</td><td class="hm-3">38</td><td class="hm-3">32</td><td class="hm-3">30</td><td class="hm-3">35</td><td class="hm-1">12</td><td class="hm-3">30</td><td class="hm-2">25</td><td class="hm-2">22</td><td class="hm-0">4</td><td class="hm-0">1</td></tr><tr><td class="day">Tue</td><td class="hm-2">25</td><td class="hm-2">17</td><td class="hm-2">18</td><td class="hm-1">16</td><td class="hm-2">20</td><td class="hm-0">5</td><td class="hm-2">21</td><td class="hm-1">11</td><td class="hm-0">4</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Wed</td><td class="hm-2">22</td><td class="hm-2">20</td><td class="hm-1">10</td><td class="hm-1">12</td><td class="hm-1">13</td><td class="hm-0">2</td><td class="hm-1">16</td><td class="hm-1">8</td><td class="hm-0">3</td><td class="hm-0">1</td><td class="hm-0">0</td></tr><tr><td class="day">Thu</td><td class="hm-2">24</td><td class="hm-2">18</td><td class="hm-0">5</td><td class="hm-1">12</td><td class="hm-1">14</td><td class="hm-1">6</td><td class="hm-2">19</td><td class="hm-1">8</td><td class="hm-1">6</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Fri</td><td class="hm-4">44</td><td class="hm-3">38</td><td class="hm-2">28</td><td class="hm-2">25</td><td class="hm-3">31</td><td class="hm-1">8</td><td class="hm-3">29</td><td class="hm-2">17</td><td class="hm-2">17</td><td class="hm-1">7</td><td class="hm-0">0</td></tr></tbody>
+</table>
+      <table class="heatmap hidden" id="heatmap-3mo-in">
+<thead><tr><th></th><th>6a</th><th>7a</th><th>8a</th><th>9a</th><th>10a</th><th>11a</th><th>12p</th><th>1p</th><th>2p</th><th>3p</th><th>4p</th></tr></thead>
+<tbody><tr><td class="day">Mon</td><td class="hm-5">47</td><td class="hm-3">26</td><td class="hm-2">20</td><td class="hm-2">19</td><td class="hm-1">14</td><td class="hm-1">5</td><td class="hm-1">12</td><td class="hm-1">8</td><td class="hm-1">8</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Tue</td><td class="hm-2">16</td><td class="hm-1">13</td><td class="hm-1">14</td><td class="hm-1">5</td><td class="hm-1">7</td><td class="hm-0">3</td><td class="hm-1">9</td><td class="hm-1">6</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Wed</td><td class="hm-2">16</td><td class="hm-2">15</td><td class="hm-1">6</td><td class="hm-1">8</td><td class="hm-1">11</td><td class="hm-0">2</td><td class="hm-1">12</td><td class="hm-1">6</td><td class="hm-0">0</td><td class="hm-0">1</td><td class="hm-0">0</td></tr><tr><td class="day">Thu</td><td class="hm-3">24</td><td class="hm-2">17</td><td class="hm-1">5</td><td class="hm-1">7</td><td class="hm-1">12</td><td class="hm-0">4</td><td class="hm-1">13</td><td class="hm-1">5</td><td class="hm-0">4</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Fri</td><td class="hm-1">12</td><td class="hm-1">8</td><td class="hm-1">8</td><td class="hm-1">6</td><td class="hm-1">5</td><td class="hm-0">1</td><td class="hm-1">6</td><td class="hm-0">1</td><td class="hm-0">2</td><td class="hm-0">0</td><td class="hm-0">0</td></tr></tbody>
+</table>
+      <table class="heatmap hidden" id="heatmap-3mo-out">
+<thead><tr><th></th><th>6a</th><th>7a</th><th>8a</th><th>9a</th><th>10a</th><th>11a</th><th>12p</th><th>1p</th><th>2p</th><th>3p</th><th>4p</th></tr></thead>
+<tbody><tr><td class="day">Mon</td><td class="hm-1">9</td><td class="hm-2">12</td><td class="hm-2">12</td><td class="hm-2">11</td><td class="hm-3">21</td><td class="hm-1">7</td><td class="hm-3">18</td><td class="hm-3">17</td><td class="hm-2">14</td><td class="hm-1">4</td><td class="hm-0">1</td></tr><tr><td class="day">Tue</td><td class="hm-1">9</td><td class="hm-1">4</td><td class="hm-1">4</td><td class="hm-2">11</td><td class="hm-2">13</td><td class="hm-0">2</td><td class="hm-2">12</td><td class="hm-1">5</td><td class="hm-0">3</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Wed</td><td class="hm-1">6</td><td class="hm-1">5</td><td class="hm-1">4</td><td class="hm-1">4</td><td class="hm-0">2</td><td class="hm-0">0</td><td class="hm-1">4</td><td class="hm-0">2</td><td class="hm-0">3</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Thu</td><td class="hm-0">0</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-1">5</td><td class="hm-0">2</td><td class="hm-0">2</td><td class="hm-1">6</td><td class="hm-0">3</td><td class="hm-0">2</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Fri</td><td class="hm-5">32</td><td class="hm-5">30</td><td class="hm-3">20</td><td class="hm-3">19</td><td class="hm-4">26</td><td class="hm-1">7</td><td class="hm-4">23</td><td class="hm-2">16</td><td class="hm-2">15</td><td class="hm-1">7</td><td class="hm-0">0</td></tr></tbody>
+</table>
+    </div>
+    <div class="heatmap-wrap util-1mo hidden">
+      <table class="heatmap hidden" id="heatmap-1mo-all">
+<thead><tr><th></th><th>6a</th><th>7a</th><th>8a</th><th>9a</th><th>10a</th><th>11a</th><th>12p</th><th>1p</th><th>2p</th><th>3p</th><th>4p</th></tr></thead>
+<tbody><tr><td class="day">Mon</td><td class="hm-5">25</td><td class="hm-3">16</td><td class="hm-3">14</td><td class="hm-2">12</td><td class="hm-3">14</td><td class="hm-1">6</td><td class="hm-2">10</td><td class="hm-1">5</td><td class="hm-2">8</td><td class="hm-0">2</td><td class="hm-0">1</td></tr><tr><td class="day">Tue</td><td class="hm-2">12</td><td class="hm-1">5</td><td class="hm-1">5</td><td class="hm-1">6</td><td class="hm-1">5</td><td class="hm-0">1</td><td class="hm-2">8</td><td class="hm-1">6</td><td class="hm-0">2</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Wed</td><td class="hm-2">8</td><td class="hm-1">7</td><td class="hm-0">2</td><td class="hm-1">3</td><td class="hm-1">4</td><td class="hm-0">1</td><td class="hm-1">5</td><td class="hm-1">4</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Thu</td><td class="hm-1">7</td><td class="hm-1">5</td><td class="hm-0">1</td><td class="hm-1">4</td><td class="hm-1">5</td><td class="hm-0">2</td><td class="hm-0">1</td><td class="hm-0">1</td><td class="hm-1">3</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Fri</td><td class="hm-2">10</td><td class="hm-2">11</td><td class="hm-2">9</td><td class="hm-2">10</td><td class="hm-3">13</td><td class="hm-1">3</td><td class="hm-3">13</td><td class="hm-1">7</td><td class="hm-2">8</td><td class="hm-0">2</td><td class="hm-0">0</td></tr></tbody>
+</table>
+      <table class="heatmap hidden" id="heatmap-1mo-in">
+<thead><tr><th></th><th>6a</th><th>7a</th><th>8a</th><th>9a</th><th>10a</th><th>11a</th><th>12p</th><th>1p</th><th>2p</th><th>3p</th><th>4p</th></tr></thead>
+<tbody><tr><td class="day">Mon</td><td class="hm-5">21</td><td class="hm-2">10</td><td class="hm-2">10</td><td class="hm-2">8</td><td class="hm-1">4</td><td class="hm-1">3</td><td class="hm-0">2</td><td class="hm-1">3</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Tue</td><td class="hm-1">5</td><td class="hm-1">3</td><td class="hm-1">3</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-1">6</td><td class="hm-1">4</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Wed</td><td class="hm-1">5</td><td class="hm-1">6</td><td class="hm-0">1</td><td class="hm-1">3</td><td class="hm-1">3</td><td class="hm-0">1</td><td class="hm-1">5</td><td class="hm-1">3</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Thu</td><td class="hm-2">7</td><td class="hm-1">5</td><td class="hm-0">1</td><td class="hm-0">2</td><td class="hm-1">4</td><td class="hm-0">1</td><td class="hm-0">1</td><td class="hm-0">1</td><td class="hm-1">3</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Fri</td><td class="hm-0">1</td><td class="hm-1">3</td><td class="hm-1">3</td><td class="hm-1">3</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">0</td></tr></tbody>
+</table>
+      <table class="heatmap hidden" id="heatmap-1mo-out">
+<thead><tr><th></th><th>6a</th><th>7a</th><th>8a</th><th>9a</th><th>10a</th><th>11a</th><th>12p</th><th>1p</th><th>2p</th><th>3p</th><th>4p</th></tr></thead>
+<tbody><tr><td class="day">Mon</td><td class="hm-2">4</td><td class="hm-2">6</td><td class="hm-2">4</td><td class="hm-2">4</td><td class="hm-4">10</td><td class="hm-1">3</td><td class="hm-3">8</td><td class="hm-1">2</td><td class="hm-3">7</td><td class="hm-1">2</td><td class="hm-0">1</td></tr><tr><td class="day">Tue</td><td class="hm-3">7</td><td class="hm-1">2</td><td class="hm-1">2</td><td class="hm-2">5</td><td class="hm-2">5</td><td class="hm-0">1</td><td class="hm-1">2</td><td class="hm-1">2</td><td class="hm-1">2</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Wed</td><td class="hm-1">3</td><td class="hm-0">1</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Thu</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-1">2</td><td class="hm-0">1</td><td class="hm-0">1</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td><td class="hm-0">0</td></tr><tr><td class="day">Fri</td><td class="hm-3">9</td><td class="hm-3">8</td><td class="hm-2">6</td><td class="hm-3">7</td><td class="hm-5">12</td><td class="hm-1">3</td><td class="hm-5">13</td><td class="hm-3">7</td><td class="hm-3">7</td><td class="hm-1">2</td><td class="hm-0">0</td></tr></tbody>
+</table>
+    </div>
+    <div class="legend">
+      Low <span class="sw hm-0"></span><span class="sw hm-1"></span><span class="sw hm-2"></span><span class="sw hm-3"></span><span class="sw hm-4"></span><span class="sw hm-5"></span> High
+    </div>
+  </section>
+
+  <!-- ========== TRENDS ========== -->
+  <section id="trends">
+    <div class="section-header">
+      <h2>Trends</h2>
+      <span class="badge">Monthly, YTD</span>
+    </div>
+
+    <div class="trend-hero">
+      <span class="hero-badge">Watching</span>
+      <h3>
+        Reschedule Rate % — by Direction
+        <span class="mini-legend"><span><span class="sq in"></span>Inbound</span><span><span class="sq out"></span>Outbound</span></span>
+      </h3>
+      <div class="bar-chart split">
+        
+        <div class="bar-group">
+          <div class="bar in" style="height: 48%;"><span class="bar-value">48%</span></div>
+          <div class="bar out" style="height: 58%;"><span class="bar-value">58%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 46%;"><span class="bar-value">46%</span></div>
+          <div class="bar out" style="height: 55%;"><span class="bar-value">55%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 43%;"><span class="bar-value">43%</span></div>
+          <div class="bar out" style="height: 62%;"><span class="bar-value">62%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 64%;"><span class="bar-value">64%</span></div>
+          <div class="bar out" style="height: 61%;"><span class="bar-value">61%</span></div>
+        </div>
+      </div>
+      <div class="bar-labels"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+      <div class="hero-note">
+        <strong>Story:</strong> Combined reschedule rate moved from 53% in Jan to 62% in Apr (up 9 pts). In Apr: Inbound 64%, Outbound 61%.
+      </div>
+    </div>
+
+    <div class="trend-grid">
+      <div class="trend-card">
+        <h3>
+          Volume
+          <span class="mini-legend"><span><span class="sq in"></span>IN</span><span><span class="sq out"></span>OUT</span></span>
+        </h3>
+        <div class="bar-chart split">
+        <div class="bar-group">
+          <div class="bar in" style="height: 78%;"><span class="bar-value">136</span></div>
+          <div class="bar out" style="height: 81%;"><span class="bar-value">141</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 100%;"><span class="bar-value">174</span></div>
+          <div class="bar out" style="height: 78%;"><span class="bar-value">135</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 88%;"><span class="bar-value">153</span></div>
+          <div class="bar out" style="height: 99%;"><span class="bar-value">173</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 80%;"><span class="bar-value">139</span></div>
+          <div class="bar out" style="height: 71%;"><span class="bar-value">124</span></div>
+        </div></div>
+        <div class="bar-labels"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+      </div>
+
+      <div class="trend-card">
+        <h3>
+          On-Time %
+          <span class="mini-legend"><span><span class="sq in"></span>IN</span><span><span class="sq out"></span>OUT</span></span>
+        </h3>
+        <div class="bar-chart split">
+        <div class="bar-group">
+          <div class="bar in" style="height: 93%;"><span class="bar-value">93%</span></div>
+          <div class="bar out" style="height: 86%;"><span class="bar-value">86%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 93%;"><span class="bar-value">93%</span></div>
+          <div class="bar out" style="height: 88%;"><span class="bar-value">88%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 93%;"><span class="bar-value">93%</span></div>
+          <div class="bar out" style="height: 83%;"><span class="bar-value">83%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 95%;"><span class="bar-value">95%</span></div>
+          <div class="bar out" style="height: 89%;"><span class="bar-value">89%</span></div>
+        </div></div>
+        <div class="bar-labels"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+      </div>
+
+      <div class="trend-card">
+        <h3>
+          Avg Dwell (min)
+          <span class="mini-legend"><span><span class="sq in"></span>IN</span><span><span class="sq out"></span>OUT</span></span>
+        </h3>
+        <div class="bar-chart split">
+        <div class="bar-group">
+          <div class="bar in" style="height: 64%;"><span class="bar-value">107m</span></div>
+          <div class="bar out" style="height: 74%;"><span class="bar-value">123m</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 53%;"><span class="bar-value">88m</span></div>
+          <div class="bar out" style="height: 72%;"><span class="bar-value">119m</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 56%;"><span class="bar-value">93m</span></div>
+          <div class="bar out" style="height: 65%;"><span class="bar-value">108m</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 100%;"><span class="bar-value">166m</span></div>
+          <div class="bar out" style="height: 71%;"><span class="bar-value">118m</span></div>
+        </div></div>
+        <div class="bar-labels"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+      </div>
+
+      <div class="trend-card">
+        <h3>
+          Disruption %
+          <span class="mini-legend"><span><span class="sq in"></span>IN</span><span><span class="sq out"></span>OUT</span></span>
+        </h3>
+        <div class="bar-chart split">
+        <div class="bar-group">
+          <div class="bar in" style="height: 52%;"><span class="bar-value">52%</span></div>
+          <div class="bar out" style="height: 63%;"><span class="bar-value">63%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 53%;"><span class="bar-value">53%</span></div>
+          <div class="bar out" style="height: 59%;"><span class="bar-value">59%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 47%;"><span class="bar-value">47%</span></div>
+          <div class="bar out" style="height: 67%;"><span class="bar-value">67%</span></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar in" style="height: 68%;"><span class="bar-value">68%</span></div>
+          <div class="bar out" style="height: 70%;"><span class="bar-value">70%</span></div>
+        </div></div>
+        <div class="bar-labels"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+      </div>
+    </div>
+
+    <div class="subhead">What the trends suggest</div>
+    <ul class="callouts">
+      <li class="callout warn">
+        <div class="callout-title">Inbound dwell growing faster than outbound</div>
+        <div class="callout-body">Inbound dwell: 107m → 166m. Outbound dwell: 123m → 118m. Suggests receiving/unloading bottleneck.</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ========== MARS ========== -->
+  <section id="mars">
+    <div class="section-header">
+      <h2>MARS</h2>
+      <span class="badge">Customer Account</span>
+    </div>
+
+    <div class="mars-stats">
+      <div class="kpi">
+        <div class="value">90</div>
+        <div class="label">MARS Appts YTD</div>
+        <div class="trend flat">Completed + In-Progress</div>
+        <div class="io-split"><span class="in">IN 86</span><span class="out">OUT 4</span></div>
+      </div>
+      <div class="kpi green">
+        <div class="value"><span class="dot g"></span>96%</div>
+        <div class="label">MARS On-Time</div>
+        <div class="trend flat">Finalized only</div>
+        <div class="io-split"><span class="in">IN 97%</span><span class="out">OUT 75%</span></div>
+      </div>
+      <div class="kpi">
+        <div class="value">112 min</div>
+        <div class="label">MARS Avg Dwell</div>
+        <div class="trend flat">Finalized only</div>
+        <div class="io-split"><span class="in">IN 115m</span><span class="out">OUT 64m</span></div>
+      </div>
+      <div class="kpi">
+        <div class="value">8%</div>
+        <div class="label">Share of Volume</div>
+        <div class="trend flat">of total appts</div>
+      </div>
+    </div>
+
+    <div class="subhead">By Load Type</div>
+    <table class="carrier-table">
+      <thead>
+        <tr>
+          <th>Load Type</th>
+          <th class="num">Appts</th>
+          <th class="num">OT %</th>
+          <th class="num">Avg Dwell</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>MARS CO-PAK</td><td class="num">13</td><td class="num">92%</td><td class="num">67</td></tr><tr><td>MARS OUTBOUND ONLY</td><td class="num">4</td><td class="num">75%</td><td class="num">64</td></tr><tr><td>MARS-SNICKER</td><td class="num">73</td><td class="num">97%</td><td class="num">123</td></tr>
+      </tbody>
+    </table>
+
+    <div class="mars-note" style="margin-top: 14px;">
+      <strong>Note:</strong> MARS load types are kept separate from the standard Inbound/Outbound groupings because MARS is a distinct customer account.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <strong>TR Toppers Warehouse Operations</strong> &middot; Dock Operations Dashboard<br>
+  Source: OpenDock Nova API, YTD Jan 02, 2026 – Apr 24, 2026<br>
+  <em>Data window: YTD. Generated from YTD_Opendock_Insights.xlsx (1,263 rows).</em>
+</footer>
+
+<a href="#top" id="back-to-top" title="Back to top">▲</a>
+
+<script>
+  function toggleTable() {
+    var tbl = document.getElementById('all-carriers');
+    var link = document.getElementById('toggle-all');
+    if (tbl.classList.contains('hidden')) {
+      tbl.classList.remove('hidden');
+      link.textContent = 'Hide full carrier list ▲';
+    } else {
+      tbl.classList.add('hidden');
+      link.textContent = 'Show all qualifying carriers ▼';
+    }
+  }
+
+  function setCarrierFilter(dir, btn) {
+    document.querySelectorAll('#carriers .filter-row .filter-btn').forEach(function(b) {
+      b.classList.remove('active', 'in', 'out');
+    });
+    btn.classList.add('active');
+    if (dir === 'in')  btn.classList.add('in');
+    if (dir === 'out') btn.classList.add('out');
+    var rows = document.querySelectorAll('#top5-list .carrier-row, #bot5-list .carrier-row, #all-carriers-body tr');
+    rows.forEach(function(row) {
+      var rowDir = row.getAttribute('data-dir');
+      // 'in' shows IN + MIX; 'out' shows OUT + MIX; 'mix' shows MIX only; 'all' shows everything
+      var show = (dir === 'all')
+              || (rowDir === dir)
+              || (dir === 'in' && rowDir === 'mix')
+              || (dir === 'out' && rowDir === 'mix');
+      row.style.display = show ? '' : 'none';
+    });
+  }
+
+  var activeUtilWindow = '3mo';
+  var activeHeatmapDir = 'all';
+
+  function applyHeatmapVisibility() {
+    var ids = [
+      'heatmap-3mo-all','heatmap-3mo-in','heatmap-3mo-out',
+      'heatmap-1mo-all','heatmap-1mo-in','heatmap-1mo-out'
+    ];
+    ids.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    });
+    // Show the wrapper for the active window
+    var w3 = document.querySelector('.util-3mo');
+    var w1 = document.querySelector('.util-1mo');
+    if (w3) w3.classList.add('hidden');
+    if (w1) w1.classList.add('hidden');
+    if (activeUtilWindow === '3mo' && w3) w3.classList.remove('hidden');
+    if (activeUtilWindow === '1mo' && w1) w1.classList.remove('hidden');
+    // Show the active window+dir heatmap
+    var target = document.getElementById('heatmap-' + activeUtilWindow + '-' + activeHeatmapDir);
+    if (target) target.classList.remove('hidden');
+  }
+
+  function setHeatmap(dir, btn) {
+    var parent = btn.parentElement;
+    parent.querySelectorAll('.filter-btn').forEach(function(b) {
+      b.classList.remove('active', 'in', 'out');
+    });
+    btn.classList.add('active');
+    if (dir === 'in')  btn.classList.add('in');
+    if (dir === 'out') btn.classList.add('out');
+    activeHeatmapDir = dir;
+    applyHeatmapVisibility();
+  }
+
+  function setUtilWindow(win, btn) {
+    var parent = btn.parentElement;
+    parent.querySelectorAll('.filter-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    btn.classList.add('active');
+    activeUtilWindow = win;
+    var badge = document.getElementById('util-badge');
+    if (badge) {
+      badge.textContent = (win === '3mo')
+        ? 'Last 3 Months — Jan – Mar 2026'
+        : 'Last Month — Mar 2026';
+    }
+    applyHeatmapVisibility();
+  }
+
+  var btn = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  });
+</script>
+
+</body>
+</html>
